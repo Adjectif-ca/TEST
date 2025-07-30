@@ -13,23 +13,112 @@
 
 </head>
 <body>
-    <h1 id="Name_Title">Jérémie Le Bel</h1>
-    <style>
-        #Name_Title {
-            color: #ADC178;
-            text-underline-offset: 1px;
-            border: solid;
-            border-color:#ADC178;
-            background-color: #DDE5B6;
-            border-radius: 10px;
-            border: left 10px;
-            padding: 10px;
-            display: inline-block; 
-            align-items: center;
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Scroll Grow Plant</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #e6ffe6;
+      font-family: sans-serif;
+      height: 300vh; /* Creates scroll space */
+    }
 
-        }
-        body {
-            background-color: #F0EAD2;
-        }
-    </style>
+    .container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200px;
+      height: 400px;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    path, line, circle {
+      stroke: green;
+      stroke-width: 4;
+      fill: none;
+    }
+
+    .leaf {
+      fill: green;
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <svg viewBox="0 0 100 200">
+    <!-- Stem -->
+    <line id="stem" x1="50" y1="200" x2="50" y2="200" />
+
+    <!-- Leaves -->
+    <path class="leaf" id="leaf1" d="M50 150 C40 140, 40 130, 50 120" />
+    <path class="leaf" id="leaf2" d="M50 130 C60 120, 60 110, 50 100" />
+    <path class="leaf" id="leaf3" d="M50 110 C40 100, 40 90, 50 80" />
+  </svg>
+</div>
+
+<!-- GSAP + ScrollTrigger CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Animate the stem growing
+  gsap.to("#stem", {
+    scrollTrigger: {
+      trigger: "body",
+      start: "top top",
+      end: "bottom bottom",
+      scrub: true
+    },
+    attr: { y2: 80 } // Grow from y2=200 to y2=80
+  });
+
+  // Animate leaves appearing
+  gsap.to("#leaf1", {
+    scrollTrigger: {
+      trigger: "body",
+      start: "top+=200 top",
+      end: "top+=400 top",
+      scrub: true
+    },
+    opacity: 1
+  });
+
+  gsap.to("#leaf2", {
+    scrollTrigger: {
+      trigger: "body",
+      start: "top+=400 top",
+      end: "top+=600 top",
+      scrub: true
+    },
+    opacity: 1
+  });
+
+  gsap.to("#leaf3", {
+    scrollTrigger: {
+      trigger: "body",
+      start: "top+=600 top",
+      end: "top+=800 top",
+      scrub: true
+    },
+    opacity: 1
+  });
+</script>
+
+</body>
+</html>
+
 </body>
