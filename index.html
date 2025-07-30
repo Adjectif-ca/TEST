@@ -17,9 +17,10 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: 100vw;
+      width: 150px;
       height: 100vh;
       pointer-events: none;
+      z-index: 1;
     }
 
     svg {
@@ -34,16 +35,39 @@
       stroke-dasharray: 1000;
       stroke-dashoffset: 1000;
     }
+
+    .leaf-info {
+      position: absolute;
+      left: 160px;
+      background: #fffbe6;
+      padding: 14px 18px;
+      border-left: 4px solid #A98467;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      opacity: 0;
+      max-width: 300px;
+      z-index: 2;
+      transition: opacity 0.4s ease;
+    }
+
+    #info1 { top: 65%; }
+    #info2 { top: 40%; }
+    #info3 { top: 20%; }
   </style>
 </head>
 <body>
 
+<!-- Vine growing on the left -->
 <div class="vine-container">
   <svg viewBox="0 0 100 300" preserveAspectRatio="xMidYMid meet">
-    <!-- Curved vine path (S-shaped) -->
-    <path class="vine" d="M50 300 C 20 250, 80 200, 50 150 C 20 100, 80 50, 50 0" />
+    <path class="vine" d="M20 300 C 0 250, 50 200, 20 150 C -10 100, 40 50, 20 0" />
   </svg>
 </div>
+
+<!-- Info cards appearing as leaves grow -->
+<div class="leaf-info" id="info1">🍃 I grew up loving nature and code.</div>
+<div class="leaf-info" id="info2">📚 Studied environmental computing and design.</div>
+<div class="leaf-info" id="info3">💼 Now crafting interactive green web experiences.</div>
 
 <!-- GSAP + ScrollTrigger -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -52,11 +76,9 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/InertiaPlugin.min.js"></script>
 
 <script>
-  gsap.registerPlugin(ScrollTrigger);
-  gsap.registerPlugin(ScrollSmoother);
-  gsap.registerPlugin(InertiaPlugin);
+  gsap.registerPlugin(ScrollTrigger, ScrollSmoother, InertiaPlugin);
 
-  // Animate the vine drawing on scroll
+  // Vine drawing on scroll
   gsap.to(".vine", {
     scrollTrigger: {
       trigger: "body",
@@ -65,6 +87,37 @@
       scrub: true
     },
     strokeDashoffset: 0
+  });
+
+  // Info blocks fade in as vine grows
+  gsap.to("#info1", {
+    scrollTrigger: {
+      trigger: "body",
+      start: "top+=250 top",
+      end: "top+=300 top",
+      scrub: true
+    },
+    opacity: 1
+  });
+
+  gsap.to("#info2", {
+    scrollTrigger: {
+      trigger: "body",
+      start: "top+=500 top",
+      end: "top+=550 top",
+      scrub: true
+    },
+    opacity: 1
+  });
+
+  gsap.to("#info3", {
+    scrollTrigger: {
+      trigger: "body",
+      start: "top+=700 top",
+      end: "top+=750 top",
+      scrub: true
+    },
+    opacity: 1
   });
 </script>
 
